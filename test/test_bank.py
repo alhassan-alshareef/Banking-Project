@@ -8,7 +8,6 @@ class testAcount(unittest.TestCase):
         self.acc = acount('checking', 1000)
     
     def test_deposit_valid(self):
-        
         self.acc.deposit(500)
         self.assertEqual(self.acc.balance, 1500)
     
