@@ -1,8 +1,8 @@
 import unittest
 
-from users.main import Account
+from users.users import Account
 
-from users.main import Customer
+from users.users import Customer
 
 class testAcount(unittest.TestCase):
     
