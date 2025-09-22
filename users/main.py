@@ -42,6 +42,14 @@ class Customer:
             return f'Checking account created ,  Your balance = {balance}'
         else:
             raise ValueError(f'You already have a checking account, your balance = {self.accounts['checking'].balance}')
+        
+    def saving_account(self, balance = 0):
+        if 'saving'not in self.accounts :
+            self.accounts['saving'] = Account('saving', balance)
+            return f'saving account created ,  Your balance = {balance}'
+        else:
+            raise ValueError(f"You already have a saving account, your balance = {self.accounts['saving'].balance}")
+
 
 
 
@@ -54,6 +62,7 @@ class Customer:
 if __name__ == '__main__':       
     test_account = Account("checking" , 1000)
     test_cheking_account = Customer(100, "Hassan", "Ali", "ASD@123")
+    test_saving_account = Customer(101, "Hassan", "Ali", "ASD@1234")
     try:
         new_balance = test_account.deposit(1500)
         print(f"Deposit successful. New balance: {new_balance}")
@@ -78,5 +87,21 @@ if __name__ == '__main__':
         print(check)
     except ValueError as err:
         print(err)
+        
+        
+    
+    try:
+        check = test_saving_account.saving_account(50)
+        print(check)
+    except ValueError as err:
+        print(err)
+
+    # saving_account_again
+    try:
+        check = test_saving_account.saving_account(100)
+        print(check)
+    except ValueError as err:
+        print(err)
+
 
         
