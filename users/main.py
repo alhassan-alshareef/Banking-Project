@@ -52,12 +52,6 @@ class Customer:
 
 
 
-
-
-
-
-
-
             
 if __name__ == '__main__':       
     test_account = Account("checking" , 1000)
