@@ -50,6 +50,13 @@ class Customer:
         else:
             raise ValueError(f"You already have a saving account, your balance = {self.accounts['saving'].balance}")
 
+class Bank:
+    
+    def __init__(self, filename= "banck.csv"):
+        
+        self.filename = filename
+        self.loadCustomers
+        self.customers
 
 
             
