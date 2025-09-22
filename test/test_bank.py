@@ -1,11 +1,13 @@
 import unittest
 
-from users.main import acount
+from users.main import Account
+
+from users.main import Customer
 
 class testAcount(unittest.TestCase):
     
     def setUp(self):
-        self.acc = acount('checking', 1000)
+        self.acc = Account('checking', 1000)
     
     def test_deposit_valid(self):
         self.acc.deposit(500)
@@ -22,3 +24,20 @@ class testAcount(unittest.TestCase):
     def test_deposit_invalid(self):
         with self.assertRaises(ValueError):
             self.acc.deposit(0)
+            
+            
+class testCustomer(unittest.TestCase):
+    
+
+    def setUp(self):
+        self.customer = Customer(100, "Hassan", "Ali", "ASD@123")
+
+    def test_checking_account(self):
+        self.customer.checking_account(600)
+        self.assertEqual(self.customer.accounts['checking'].balance, 600)
+
+    def test_checking_account_again(self):
+        self.customer.checking_account(600)
+        with self.assertRaises(ValueError):
+            self.customer.checking_account(1000)
+        self.assertEqual(self.customer.accounts['checking'].balance,600)
