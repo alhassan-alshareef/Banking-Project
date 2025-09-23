@@ -60,12 +60,28 @@ class Bank:
         
     def loadCustomers(self):
         with open (self.filename, 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(['customer_id', 'Fname', 'Lname', 'password', 'balance_checking', '	balance_savings',])
+                writer = csv.writer(file)
+                writer.writerow(['customer_id', 'Fname', 'Lname', 'password', 'balance_checking', 'balance_savings',])
+        try:
+            with open (self.filename, 'r', newline='') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    customer_id = row['customer_id']
+                    balance_checking = float(row['balance_checking']) if row['balance_checking'] else None
+                    balance_savings = float(row['balance_savings']) if row['balance_savings'] else None
+                    
+                    customer = Customer(customer_id, row['Fname'], row['Lname'], row['password'])
+                    if balance_checking is not None:
+                        customer.checking_account(balance_checking)
+                    if balance_savings is not None:
+                        customer.saving_account(balance_savings)
+                    self.customers[customer_id] = customer
+        except Exception:
+            print("Error loading customers:")
+        
+        
             
 
-
-            
 if __name__ == '__main__':       
     test_account = Account("checking" , 1000)
     test_cheking_account = Customer(100, "Hassan", "Ali", "ASD@123")
