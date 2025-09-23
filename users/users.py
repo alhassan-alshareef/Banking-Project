@@ -4,23 +4,34 @@ class Account:
     
     def __init__(self, acount_type, balance = 0 ):
         self.acount_type = acount_type
-        self.balance = float(balance)
+        self.balance = balance
+        self.active = True
     
     def withdraw(self, amount):
+        if not self.active:
+            raise ValueError('Account is deactivated')
         if amount <= 0:
             raise ValueError('Withdrawal amount must be greater than 0')
-        if amount > self.balance:
-            raise ValueError('Insufficient funds')
+        
+        if self.balance < 0 and not self.is_active:
+            self.is_active = False
+            print("Account has been deactivated ,negative balance.")  
         self.balance -= amount
         return self.balance
+    
         
         
     def deposit(self, amount):
-        if 0 < amount :
-            self.balance += amount
-            return self.balance
-        else:
+        if 0 >= amount :
             raise ValueError ('the amount must be greater than 0')
+        self.balance += amount
+
+        if not self.is_active and self.balance >= 0:
+            self.is_active = True
+            self.overdraft_count = 0  
+            print("Account reactivated. Overdraft fees ,balance paid.")
+
+        return self.balance
 
 
 
@@ -41,7 +52,7 @@ class Customer:
             self.accounts['checking'] = Account('checking', balance)
             return f'Checking account created ,  Your balance = {balance}'
         else:
-            raise ValueError(f'You already have a checking account, your balance = {self.accounts['checking'].balance}')
+            raise ValueError(f"You already have a checking account, your balance = {self.accounts['checking'].balance}")
         
     def saving_account(self, balance = 0):
         if 'saving'not in self.accounts :
@@ -49,6 +60,12 @@ class Customer:
             return f'saving account created ,  Your balance = {balance}'
         else:
             raise ValueError(f"You already have a saving account, your balance = {self.accounts['saving'].balance}")
+
+
+
+
+
+
 
 class Bank:
     
@@ -70,17 +87,19 @@ class Bank:
                     balance_checking = float(row['balance_checking']) if row['balance_checking'] else None
                     balance_savings = float(row['balance_savings']) if row['balance_savings'] else None
                     
-                    customer = Customer(customer_id, row['Fname'], row['Lname'], row['password'])
-                    if balance_checking is not None:
-                        customer.checking_account(balance_checking)
-                    if balance_savings is not None:
-                        customer.saving_account(balance_savings)
+                    customer = Customer(customer_id, row['Fname'], row['Lname'], row['password'],balance_checking,balance_savings)
                     self.customers[customer_id] = customer
         except Exception:
             print("Error loading customers:")
-        
-        
             
+        
+    def save_customers(self):
+        try:
+            with open (self.filename, 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(['customer_id', 'Fname', 'Lname', 'password', 'balance_checking', 'balance_savings', 'savings_active'])
+                for customer in self.customers.values():
+        except:
 
 if __name__ == '__main__':       
     test_account = Account("checking" , 1000)
