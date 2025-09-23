@@ -55,8 +55,14 @@ class Bank:
     def __init__(self, filename= "banck.csv"):
         
         self.filename = filename
-        self.loadCustomers
-        self.customers
+        self.customers = {}
+        self.loadCustomers()
+        
+    def loadCustomers(self):
+        with open (self.filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['customer_id', 'Fname', 'Lname', 'password', 'balance_checking', '	balance_savings',])
+            
 
 
             
