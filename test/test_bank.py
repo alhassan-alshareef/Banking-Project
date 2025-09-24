@@ -8,7 +8,7 @@ class TestBank(unittest.TestCase):
         self.filename = 'banck.csv'
         self.bank = Bank(self.filename)
         
-    def test_add_customer_with_only_checking(self):
+    def test_add_customer(self):
         customer = self.bank.add_new_customer( 'Hassan', 'Ali', 'awq@2341',  1000, 200)
         self.assertEqual(customer.Fname, 'Hassan') 
         self.assertEqual(customer.Lname, "Ali") 
