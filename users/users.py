@@ -125,6 +125,19 @@ class Bank:
                     
         except Exception:
             print("Error save customers:")
+    
+    def new_account_id(self):
+        if self.customers:  
+            customer_id = max(map(int,self.customers.keys())) + 1 
+            while customer_id in self.customers:  
+                customer_id += 1
+        else:
+            customer_id = 100
+            
+        return str(customer_id)
+
+        
+
 
 
 
@@ -142,5 +155,5 @@ if __name__ == "__main__":
         balance_savings=0
     )
     bank.customers[customer1.customer_id] = customer1
-    
     bank.save_customers()
+    
