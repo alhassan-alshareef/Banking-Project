@@ -1,4 +1,5 @@
 import csv
+import os 
 
 class Account:
     
@@ -12,10 +13,6 @@ class Account:
             raise ValueError('Account is deactivated')
         if amount <= 0:
             raise ValueError('Withdrawal amount must be greater than 0')
-        
-        if self.balance < 0 :
-            self.active = False
-            print("Account has been deactivated ,negative balance.")  
         self.balance -= amount
         return self.balance
     
@@ -25,11 +22,6 @@ class Account:
         if 0 >= amount :
             raise ValueError ('the amount must be greater than 0')
         self.balance += amount
-
-        if not self.active and self.balance >= 0:
-            self.active = True 
-            print("Account reactivated,balance paid.")
-
         return self.balance
     
 class Checking_Account(Account):
@@ -53,15 +45,15 @@ class Customer:
             self.checking_account = None
             
         if balance_savings is not None:
-            self.saving_account = Savings_Account(customer_id,balance_savings)
+            self.savings_account = Savings_Account(customer_id,balance_savings)
         else:
-            self.saving_account = None
+            self.savings_account = None
     
     def has_checking(self):
         return self.checking_account is not None
 
     def has_savings(self):
-        return self.saving_account is not None
+        return self.savings_account is not None
     
     def create_checking(self, ibalance=0):
         if self.has_checking():
@@ -88,7 +80,8 @@ class Bank:
         self.loadCustomers()
         
     def loadCustomers(self):
-        with open (self.filename, 'w', newline='') as file:
+        if not os.path.exists(self.filename):
+            with open (self.filename, 'w', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow(['customer_id', 'Fname', 'Lname', 'password', 'balance_checking', 'balance_savings',])
         try:
@@ -109,6 +102,45 @@ class Bank:
         try:
             with open (self.filename, 'w', newline='') as file:
                 writer = csv.writer(file)
-                writer.writerow(['customer_id', 'Fname', 'Lname', 'password', 'balance_checking', 'balance_savings', 'savings_active'])
+                writer.writerow(['customer_id', 'Fname', 'Lname', 'password', 'balance_checking', 'checking_active', 'balance_savings', 'savings_active'])
                 for customer in self.customers.values():
+                    balance_checking = customer.checking_account.balance if customer.has_checking() else ""
+                    checking_active = str(customer.checking_account.active).lower() if customer.has_checking() else ""
+                    
+                    
+                    balance_savings = customer.savings_account.balance if customer.has_savings() else ""
+                    savings_active = str(customer.savings_account.active).lower() if customer.has_savings() else ""
         
+                    writer.writerow([
+                    customer.customer_id,
+                    customer.Fname,
+                    customer.Lname,
+                    customer.password,
+                    balance_checking,
+                    checking_active,
+                    balance_savings,
+                    savings_active
+                    ])
+                    
+                    
+        except Exception:
+            print("Error save customers:")
+
+
+
+
+# try if save_customers work 
+if __name__ == "__main__":
+    bank = Bank("banck.csv")
+
+    customer1 = Customer(
+        customer_id="1001",
+        Fname="Ali",
+        Lname="alshareef",
+        password="aa@1234",
+        balance_checking=500,
+        balance_savings=0
+    )
+    bank.customers[customer1.customer_id] = customer1
+    
+    bank.save_customers()
