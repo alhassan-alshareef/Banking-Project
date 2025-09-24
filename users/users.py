@@ -2,8 +2,8 @@ import csv
 
 class Account:
     
-    def __init__(self, acount_id, balance = 0 ):
-        self.acount_id = acount_id
+    def __init__(self, account_id, balance = 0 ):
+        self.account_id = account_id
         self.balance = balance
         self.active = True
     
@@ -13,8 +13,8 @@ class Account:
         if amount <= 0:
             raise ValueError('Withdrawal amount must be greater than 0')
         
-        if self.balance < 0 and not self.is_active:
-            self.is_active = False
+        if self.balance < 0 :
+            self.active = False
             print("Account has been deactivated ,negative balance.")  
         self.balance -= amount
         return self.balance
@@ -26,7 +26,7 @@ class Account:
             raise ValueError ('the amount must be greater than 0')
         self.balance += amount
 
-        if not self.is_active and self.balance >= 0:
+        if not self.active and self.balance >= 0:
             self.active = True 
             print("Account reactivated,balance paid.")
 
@@ -41,23 +41,42 @@ class Savings_Account(Account):
         super().__init__(account_id, balance)
 
 class Customer:
-    def __init__(self, customer_id, Fname, Lname, password):
+    def __init__(self, customer_id, Fname, Lname, password, balance_checking=None, balance_savings=None):
         self.customer_id = customer_id
         self.Fname = Fname
         self.Lname =Lname
         self.password = password
-        self.accounts = {
-            
-        }
-
-class Checking_Account(Account):
-    def __init__(self, account_id, balance=0):
-        super().__init__(account_id, balance)
-
-class Savings_Account(Account):
-    def __init__(self, account_id, balance=0):
-        super().__init__(account_id, balance)
         
+        if balance_checking is not None:
+            self.checking_account = Checking_Account(customer_id,balance_checking)
+        else:
+            self.checking_account = None
+            
+        if balance_savings is not None:
+            self.saving_account = Savings_Account(customer_id,balance_savings)
+        else:
+            self.saving_account = None
+    
+    def has_checking(self):
+        return self.checking_account is not None
+
+    def has_savings(self):
+        return self.saving_account is not None
+    
+    def create_checking(self, ibalance=0):
+        if self.has_checking():
+            raise ValueError("Customer already has a checking account")
+        self.checking_account = Checking_Account(self.customer_id, ibalance)
+        return self.checking_account
+
+    def create_savings(self, ibalance=0):
+        if self.has_savings():
+            raise ValueError("Customer already has a savings account")
+        self.savings_account = Savings_Account(self.customer_id, ibalance)
+        return self.savings_account
+        
+
+
 
 
 class Bank:
