@@ -1,5 +1,6 @@
 import csv
 import os 
+import re
 
 class Account:
     
@@ -66,6 +67,19 @@ class Customer:
             raise ValueError("Customer already has a savings account")
         self.savings_account = Savings_Account(self.customer_id, ibalance)
         return self.savings_account
+    
+    @staticmethod
+    def check_password(password):
+        if len(password) < 8:
+            return 'Weak'
+        if not re.search(r"[A-Za-z]", password):
+            return 'Weak'
+        if not re.search(r"[0-9]", password):
+            return 'Weak'
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+            return 'Weak'
+        return 'strong'
+
         
 
 
@@ -142,8 +156,12 @@ class Bank:
         if not fname or not lname or not password:
             raise ValueError("First name, last name, and password are required")
         
+        if Customer.check_password(password) == "Weak":
+            raise ValueError("Password is weak")
+        
         if balance_checking is None and savings_balance is None:
             raise ValueError("At least one account type checking or savings are required")
+        
         
         customer_id = self.new_account_id()
         customer = Customer(customer_id, fname, lname, password, balance_checking, savings_balance)
@@ -158,7 +176,15 @@ class Bank:
             raise ValueError(f"The Customer account ID {customer_id} not found") 
         return self.customers.get(customer_id)
 
-
+    
+    def login(self, customer, password): 
+        try: 
+            customer = self.get_customers(customer) 
+            if customer.password != password: 
+                return ' passward Error' 
+            return customer 
+        except ValueError: 
+            return 'Account ID not found'
 
 
 # try if save_customers work 
@@ -166,7 +192,7 @@ if __name__ == "__main__":
     bank = Bank("banck.csv")
 
     customer1 = Customer(
-        customer_id="1001",
+        customer_id="1005",
         Fname="Ali",
         Lname="alshareef",
         password="aa@1234",
@@ -176,3 +202,16 @@ if __name__ == "__main__":
     bank.customers[customer1.customer_id] = customer1
     bank.save_customers()
     
+
+
+# check if the password strong or weak
+    try:
+        customer1 = bank.add_new_customer(
+            fname="ruben",
+            lname="jota",
+            password="aA@12345",
+            balance_checking=500,
+            savings_balance=0
+        )
+    except ValueError as e:
+        print(e)
