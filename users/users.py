@@ -177,16 +177,6 @@ class Bank:
         return self.customers.get(customer_id)
 
     
-    def login(self, customer, password): 
-        try: 
-            customer = self.get_customers(customer) 
-            if customer.password != password: 
-                return ' passward Error' 
-            return customer 
-        except ValueError: 
-            return 'Account ID not found'
-
-
 # try if save_customers work 
 if __name__ == "__main__":
     bank = Bank("banck.csv")

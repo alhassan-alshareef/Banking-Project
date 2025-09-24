@@ -24,11 +24,24 @@ class TestBank(unittest.TestCase):
         self.assertEqual(customer.savings_account.balance, 200)
         self.bank.save_customers()
         
-    def test_add_customer(self):
+    def test_add_customer_checkingAccount(self):
         customer = self.bank.add_new_customer( 'Alix', 'jhon', 'wqawq@23',  1000, None)
         self.assertEqual(customer.Fname, 'Alix') 
         self.assertEqual(customer.Lname, "jhon") 
         self.assertEqual(customer.checking_account.balance, 1000) 
+        self.assertIsNone(customer.savings_account)
+        self.bank.save_customers()
+    
+    def test_add_customer_with_weak_password(self):
+        with self.assertRaises(ValueError) :
+            self.bank.add_new_customer("mark", "Jhon", "weak123", 500, 0)
+            
+            
+    def test_add_customer_with_strong_password(self):
+        customer = self.bank.add_new_customer("Sara", "Smith", "Aa@12345", 1000, None)
+        self.assertEqual(customer.Fname, "Sara")
+        self.assertEqual(customer.Lname, "Smith")
+        self.assertEqual(customer.checking_account.balance, 1000)
         self.assertIsNone(customer.savings_account)
         self.bank.save_customers()
 
