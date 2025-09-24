@@ -135,7 +135,8 @@ class Bank:
             customer_id = 100
             
         return str(customer_id)
-
+    
+    
     def add_new_customer(self, fname, lname, password, balance_checking = None, savings_balance = None):
         
         if not fname or not lname or not password:
@@ -149,6 +150,14 @@ class Bank:
         self.customers[customer_id] = customer
         self.save_customers()
         return customer
+    
+    
+    
+    def get_customers(self, customer_id):
+        if customer_id not in self.customers:
+            raise ValueError(f"The Customer account ID {customer_id} not found") 
+        return self.customers.get(customer_id)
+
 
 
 
