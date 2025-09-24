@@ -136,9 +136,19 @@ class Bank:
             
         return str(customer_id)
 
+    def add_new_customer(self, fname, lname, password, balance_checking = None, savings_balance = None):
         
-
-
+        if not fname or not lname or not password:
+            raise ValueError("First name, last name, and password are required")
+        
+        if balance_checking is None and savings_balance is None:
+            raise ValueError("At least one account type checking or savings are required")
+        
+        customer_id = self.new_account_id()
+        customer = Customer(customer_id, fname, lname, password, balance_checking, savings_balance)
+        self.customers[customer_id] = customer
+        self.save_customers()
+        return customer
 
 
 
