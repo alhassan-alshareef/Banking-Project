@@ -15,3 +15,24 @@ class TestBank(unittest.TestCase):
         self.assertEqual(customer.checking_account.balance, 1000) 
         self.assertEqual(customer.savings_account.balance, 200)
         self.bank.save_customers()
+        
+    def test_add_customer_savingsAccount(self):
+        customer = self.bank.add_new_customer( 'ahmed', 'mohammed', 'awq@203421',  None, 200)
+        self.assertEqual(customer.Fname, 'ahmed') 
+        self.assertEqual(customer.Lname, "mohammed") 
+        self.assertIsNone(customer.checking_account) 
+        self.assertEqual(customer.savings_account.balance, 200)
+        self.bank.save_customers()
+        
+    def test_add_customer(self):
+        customer = self.bank.add_new_customer( 'Alix', 'jhon', 'wqawq@23',  1000, None)
+        self.assertEqual(customer.Fname, 'Alix') 
+        self.assertEqual(customer.Lname, "jhon") 
+        self.assertEqual(customer.checking_account.balance, 1000) 
+        self.assertIsNone(customer.savings_account)
+        self.bank.save_customers()
+
+
+
+if __name__ == "__main__":
+    unittest.main()
