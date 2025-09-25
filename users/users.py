@@ -8,17 +8,34 @@ class Account:
         self.account_id = account_id
         self.balance = balance
         self.active = True
+        self.overdraftCount = 0
     
     def withdraw(self, amount):
         if not self.active:
             raise ValueError('Account is deactivated')
         if amount <= 0:
             raise ValueError('Withdrawal amount must be greater than 0')
+        if self.balance - amount < -100:
+            raise ValueError("account cannot have a resulting balance of less than -$100.")
+        
+        if self.balance < 0:
+            if amount > 100:
+                raise ValueError('Cannot withdraw amounts over $100')
+            self.balance -=35
+            self.overdraftCount += 1
+            print('Overdraft occurred — $35 fee added to your balance.')
+            
+            if self.overdraft_count >= 2:
+                self.is_active = False
+                print('Account has been deactivated ') 
+        if self.balance < 0 and not self.is_active:
+            self.is_active = False
+            
+            print('Account deactivated due to negative balance.')
+        
         self.balance -= amount
         return self.balance
     
-        
-        
     def deposit(self, amount):
         if 0 >= amount :
             raise ValueError ('the amount must be greater than 0')
@@ -79,11 +96,6 @@ class Customer:
         if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
             return 'Weak'
         return 'strong'
-
-        
-
-
-
 
 class Bank:
     
