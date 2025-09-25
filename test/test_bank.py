@@ -44,6 +44,7 @@ class TestBank(unittest.TestCase):
         self.assertEqual(customer.checking_account.balance, 1000)
         self.assertIsNone(customer.savings_account)
         self.bank.save_customers()
+        
 
 
 

@@ -40,6 +40,10 @@ class Account:
         if 0 >= amount :
             raise ValueError ('the amount must be greater than 0')
         self.balance += amount
+        if not self.is_active and self.balance >= 0:
+            self.is_active = True
+            self.overdraft_count = 0  
+            print('Account reactivated. Overdraft cleared and balance restored.')
         return self.balance
     
 class Checking_Account(Account):
