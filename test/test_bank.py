@@ -7,7 +7,8 @@ class TestBank(unittest.TestCase):
         
         self.filename = 'banck.csv'
         self.bank = Bank(self.filename)
-        
+
+
     def test_add_customer(self):
         customer = self.bank.add_new_customer( 'Hassan', 'Ali', 'awq@2341',  1000, 200)
         self.assertEqual(customer.Fname, 'Hassan') 
@@ -60,7 +61,27 @@ class TestBank(unittest.TestCase):
         customer = self.bank.add_new_customer('leo','ass','pass@1234',200,100)
         customer.checking_account.withdraw(300)  
         self.assertEqual(customer.checking_account.balance,-135)  
+        self.bank.save_customers()
+    
+    def test_savings_overdraft(self):
+        customer = self.bank.add_new_customer('max','mac','pass@1234',100,300)
+        customer.savings_account.withdraw(310)
+        self.assertEqual(customer.savings_account.balance, -45)
         self.bank.save_customers()    
+
+    def test_overdraft_deactivate(self):
+        customer = self.bank.add_new_customer('basil','ahmed','pass@4321',100,300)
+        new_balance = customer.checking_account.withdraw(120) 
+        self.assertEqual(new_balance, -55) 
+        self.assertEqual(customer.checking_account.overdraftCount, 1) 
+        self.assertTrue(customer.checking_account.active) 
+        new_balance = customer.checking_account.withdraw(10) 
+        self.assertEqual(new_balance, -100) 
+        self.assertEqual(customer.checking_account.overdraftCount, 2) 
+        self.assertFalse(customer.checking_account.active)
+        self.bank.save_customers()
+
+
 
         
 

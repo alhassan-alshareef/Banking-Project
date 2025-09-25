@@ -15,12 +15,16 @@ class Account:
             raise ValueError('Account is deactivated')
         if amount <= 0:
             raise ValueError('Withdrawal amount must be greater than 0')
-        if self.balance - amount < -100:
-            raise ValueError("account cannot have a resulting balance of less than -$100.")
-        
         if self.balance < 0:
             if amount > 100:
                 raise ValueError('Cannot withdraw amounts over $100')
+        
+        new_balance = self.balance - amount
+        if  new_balance< -100:
+            raise ValueError("account cannot have a resulting balance of less than -$100.")
+
+        self.balance -= amount
+        if self.balance < 0:
             self.balance -=35
             self.overdraftCount += 1
             print('Overdraft occurred — $35 fee added to your balance.')
@@ -28,11 +32,8 @@ class Account:
             if self.overdraftCount >= 2:
                 self.active = False
                 print('Account has been deactivated ') 
-        if self.balance < 0 and not self.active:
-            self.active = False
-            print('Account deactivated due to negative balance.')
         
-        self.balance -= amount
+        
         return self.balance
     
     def deposit(self, amount):
@@ -122,6 +123,10 @@ class Bank:
                     balance_savings = float(row['balance_savings']) if row['balance_savings'] else None
                     
                     customer = Customer(customer_id, row['Fname'], row['Lname'], row['password'],balance_checking,balance_savings)
+                    if balance_checking is not None and 'checking_active' in row:
+                        customer.checking_account.active = row['checking_active'].lower() == 'true'
+                    if balance_savings is not None and 'savings_active' in row:
+                        customer.savings_account.active = row['savings_active'].lower() == 'true'
                     self.customers[customer_id] = customer
         except Exception:
             print("Error loading customers:")
