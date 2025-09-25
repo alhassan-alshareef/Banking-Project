@@ -7,8 +7,8 @@ class Account:
     def __init__(self, account_id, balance = 0 ):
         self.account_id = account_id
         self.balance = balance
-        self.active = True
         self.overdraftCount = 0
+        self.active = True
     
     def withdraw(self, amount):
         if not self.active:
@@ -25,12 +25,11 @@ class Account:
             self.overdraftCount += 1
             print('Overdraft occurred — $35 fee added to your balance.')
             
-            if self.overdraft_count >= 2:
-                self.is_active = False
+            if self.overdraftCount >= 2:
+                self.active = False
                 print('Account has been deactivated ') 
-        if self.balance < 0 and not self.is_active:
-            self.is_active = False
-            
+        if self.balance < 0 and not self.active:
+            self.active = False
             print('Account deactivated due to negative balance.')
         
         self.balance -= amount
@@ -40,9 +39,9 @@ class Account:
         if 0 >= amount :
             raise ValueError ('the amount must be greater than 0')
         self.balance += amount
-        if not self.is_active and self.balance >= 0:
-            self.is_active = True
-            self.overdraft_count = 0  
+        if not self.active and self.balance >= 0:
+            self.active = True
+            self.overdraftCount = 0  
             print('Account reactivated. Overdraft cleared and balance restored.')
         return self.balance
     
@@ -167,7 +166,7 @@ class Bank:
         return str(customer_id)
     
     
-    def add_new_customer(self, fname, lname, password, balance_checking = None, savings_balance = None):
+    def add_new_customer(self, fname, lname, password, balance_checking = None, balance_savings = None):
         
         if not fname or not lname or not password:
             raise ValueError("First name, last name, and password are required")
@@ -175,12 +174,12 @@ class Bank:
         if Customer.check_password(password) == "Weak":
             raise ValueError("Password is weak")
         
-        if balance_checking is None and savings_balance is None:
+        if balance_checking is None and balance_savings is None:
             raise ValueError("At least one account type checking or savings are required")
         
         
         customer_id = self.new_account_id()
-        customer = Customer(customer_id, fname, lname, password, balance_checking, savings_balance)
+        customer = Customer(customer_id, fname, lname, password, balance_checking, balance_savings)
         self.customers[customer_id] = customer
         self.save_customers()
         return customer
@@ -193,31 +192,3 @@ class Bank:
         return self.customers.get(customer_id)
 
     
-# try if save_customers work 
-if __name__ == "__main__":
-    bank = Bank("banck.csv")
-
-    customer1 = Customer(
-        customer_id="1005",
-        Fname="Ali",
-        Lname="alshareef",
-        password="aa@1234",
-        balance_checking=500,
-        balance_savings=0
-    )
-    bank.customers[customer1.customer_id] = customer1
-    bank.save_customers()
-    
-
-
-# check if the password strong or weak
-    try:
-        customer1 = bank.add_new_customer(
-            fname="ruben",
-            lname="jota",
-            password="aA@12345",
-            balance_checking=500,
-            savings_balance=0
-        )
-    except ValueError as e:
-        print(e)

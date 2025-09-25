@@ -45,6 +45,24 @@ class TestBank(unittest.TestCase):
         self.assertIsNone(customer.savings_account)
         self.bank.save_customers()
         
+    def test_withdraw_checking(self): 
+        customer = self.bank.add_new_customer('abc', 'ssa', 'pass@123word', 800, None) 
+        customer.checking_account.withdraw(250) 
+        self.assertEqual(customer.checking_account.balance, 550) 
+        self.assertIsNone(customer.savings_account)
+        with self.assertRaises(ValueError): 
+            customer.checking_account.withdraw(800)
+        with self.assertRaises(ValueError): 
+            customer.checking_account.withdraw(-200) 
+        self.bank.save_customers() 
+        
+    def test_withdraw_overdraftChecking(self):
+        customer = self.bank.add_new_customer('leo','ass','pass@1234',200,100)
+        customer.checking_account.withdraw(300)  
+        self.assertEqual(customer.checking_account.balance,-135)  
+        self.bank.save_customers()    
+
+        
 
 
 
