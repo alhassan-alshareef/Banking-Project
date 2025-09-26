@@ -3,8 +3,10 @@ customer_id,Fname,Lname,password,balance_checking,checking_active,balance_saving
 101,Alix,jhon,wqawq@23,1000.0,true,,
 102,ahmed,mohammed,awq@203421,,,200.0,true
 103,Sara,Smith,Aa@12345,1000.0,true,,
-104,basil,ahmed,pass@4321,-100.0,false,300.0,true
-105,max,mac,pass@1234,100.0,true,-45.0,true
-106,abc,ssa,pass@123word,550.0,true,,
-107,leo,ass,pass@1234,-135.0,true,100.0,true
-108,Alix,XX,AAx552@322,,,600,true
+104,waleed,Khaled,Wa@dd3256472,5000.0,true,,
+105,jana,QQ,JA@gfr2005,,,2000.0,true
+106,basil,ahmed,pass@4321,-100.0,false,300.0,true
+107,max,mac,pass@1234,100.0,true,-45.0,true
+108,abc,ssa,pass@123word,550.0,true,,
+109,leo,ass,pass@1234,-135.0,true,100.0,true
+110,Alix,XX,AAx552@322,,,600,true

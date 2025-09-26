@@ -55,7 +55,15 @@ class TestBank(unittest.TestCase):
             customer.checking_account.withdraw(800)
         with self.assertRaises(ValueError): 
             customer.checking_account.withdraw(-200) 
-        self.bank.save_customers() 
+        self.bank.save_customers()
+        
+    def test_deposit_into_checking(self):
+        customer = self.bank.add_new_customer('waleed','Khaled','Wa@dd3256472',3000,None)
+        customer.checking_account.deposit(2000)
+        self.assertEqual(customer.checking_account.balance,5000)
+        with self.assertRaises(ValueError): 
+            customer.checking_account.deposit(-90)
+        self.bank.save_customers()     
         
     def test_withdraw_overdraftChecking(self):
         customer = self.bank.add_new_customer('leo','ass','pass@1234',200,100)
@@ -89,9 +97,16 @@ class TestBank(unittest.TestCase):
             customer.savings_account.withdraw(1100) 
         with self.assertRaises(ValueError): 
             customer.savings_account.withdraw(-200)
-        self.bank.save_customers()        
-   
+        self.bank.save_customers()   
         
+    def test_deposit_into_savings(self):
+        customer = self.bank.add_new_customer('jana','QQ',"JA@gfr2005",None,1000)
+        customer.savings_account.deposit(1000)
+        self.assertEqual(customer.savings_account.balance,2000)
+        with self.assertRaises(ValueError): 
+            customer.savings_account.deposit(-150)
+        self.bank.save_customers()    
+            
 
 
 if __name__ == "__main__":
