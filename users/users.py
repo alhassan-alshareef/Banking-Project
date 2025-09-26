@@ -45,6 +45,10 @@ class Account:
             self.overdraftCount = 0  
             print('Account reactivated. Overdraft cleared and balance restored.')
         return self.balance
+
+
+
+
     
 class Checking_Account(Account):
     def __init__(self, account_id, balance=0):
@@ -53,6 +57,9 @@ class Checking_Account(Account):
 class Savings_Account(Account):
     def __init__(self, account_id, balance=0):
         super().__init__(account_id, balance)
+
+
+
 
 class Customer:
     def __init__(self, customer_id, Fname, Lname, password, balance_checking=None, balance_savings=None):
@@ -100,6 +107,12 @@ class Customer:
         if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
             return 'Weak'
         return 'strong'
+
+
+
+
+
+
 
 class Bank:
     
@@ -196,4 +209,25 @@ class Bank:
             raise ValueError(f"The Customer account ID {customer_id} not found") 
         return self.customers.get(customer_id)
 
-    
+
+    def transfer(self, sender_id, recipient_id, amount, account_type):
+        sender = self.get_customers(sender_id)
+        recipient = self.get_customers(recipient_id)
+
+        if account_type == 'checking' and sender.has_checking() and recipient.has_checking():
+            if sender.checking_account.balance >= amount:
+                sender.checking_account.withdraw(amount)
+                recipient.checking_account.deposit(amount)
+                self.save_customers()
+                return f'{amount} has been transferred. Updated balance: {sender.checking_account.balance}'
+        elif account_type == 'savings' and sender.has_savings() and recipient.has_savings():
+            if sender.savings_account.balance >= amount:
+                sender.savings_account.withdraw(amount)
+                recipient.savings_account.deposit(amount)
+                self.save_customers()
+                return f'{amount} has been transferred. Updated balance: {sender.savings_account.balance}'
+        else:
+            return 'Low funds'
+
+
+

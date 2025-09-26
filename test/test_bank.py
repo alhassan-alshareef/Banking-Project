@@ -80,11 +80,7 @@ class TestBank(unittest.TestCase):
         self.assertEqual(customer.checking_account.overdraftCount, 2) 
         self.assertFalse(customer.checking_account.active)
         self.bank.save_customers()
-
-
-
         
-
 
 
 if __name__ == "__main__":
