@@ -81,6 +81,17 @@ class TestBank(unittest.TestCase):
         self.assertFalse(customer.checking_account.active)
         self.bank.save_customers()
         
+    def test_withdraw_savings(self): 
+        customer = self.bank.add_new_customer("Alix", 'XX', 'AAx552@322', None, 1100) 
+        customer.savings_account.withdraw(500) 
+        self.assertEqual(customer.savings_account.balance, 600) 
+        with self.assertRaises(ValueError): 
+            customer.savings_account.withdraw(1100) 
+        with self.assertRaises(ValueError): 
+            customer.savings_account.withdraw(-200)
+        self.bank.save_customers()        
+   
+        
 
 
 if __name__ == "__main__":

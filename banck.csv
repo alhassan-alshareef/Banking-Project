@@ -7,3 +7,4 @@ customer_id,Fname,Lname,password,balance_checking,checking_active,balance_saving
 105,max,mac,pass@1234,100.0,true,-45.0,true
 106,abc,ssa,pass@123word,550.0,true,,
 107,leo,ass,pass@1234,-135.0,true,100.0,true
+108,Alix,XX,AAx552@322,,,600,true
