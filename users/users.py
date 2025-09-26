@@ -209,6 +209,14 @@ class Bank:
             raise ValueError(f"The Customer account ID {customer_id} not found") 
         return self.customers.get(customer_id)
 
+    def login_customer(self, customer_id, password): 
+        try: 
+            customer = self.get_customers(customer_id) 
+            if customer.password != password: 
+                return None 
+            return customer 
+        except ValueError: 
+            return None
 
     def transfer(self, sender_id, recipient_id, amount, account_type):
         sender = self.get_customers(sender_id)
@@ -228,6 +236,7 @@ class Bank:
                 return f'{amount} has been transferred. Updated balance: {sender.savings_account.balance}'
         else:
             return 'Low funds'
-
+        
+        
 
 
