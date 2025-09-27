@@ -74,13 +74,61 @@ class BankAPP:
                             
                             
                 elif action == 'c':
-                    print("👋 Goodbye!")
+                    print("\n👋 Goodbye!")
                     break
                 
                 
                 else:
                     print("❌ Invalid option")
                     
+                    
+            else:
+                print("\n1. 💵 Deposit")
+                print("2. 🏧 Withdraw")
+                print("3. 🔄 Transfer")
+                print("\n4. 🚪 Logout")
+                
+                
+                action = input("Choose an action: ")
+                if action == '1':
+                    while True:
+                        amount = float(input("💵 Deposit amount: "))
+                        acc_type = input("Deposit to (checking/savings): ").lower()
+                        try:
+                            if acc_type == "checking":
+                                self.user.checking_account.deposit(amount)
+                                print(f"💰 New balance: {self.user.checking_account.balance}")
+                            elif acc_type == "savings":
+                                self.user.savings_account.deposit(amount)
+                                print(f"💰 New balance: {self.user.savings_account.balance}")
+                            else:
+                                print("❌ Invalid account type")
+                            self.bank.save_customers()
+                            break
+                        except ValueError as e:
+                            print("❌ Error:", e)
+
+
+
+                elif action == '2':
+                    while True:
+                        amount = float(input("🏧 Withdraw amount: "))
+                        acc_type = input("Withdraw from (checking/savings): ").lower()
+                        try:
+                            if acc_type == "checking":
+                                self.user.checking_account.withdraw(amount)
+                                print(f"💰 New balance: {self.user.checking_account.balance}")
+                            elif acc_type == "savings":
+                                self.user.savings_account.withdraw(amount)
+                                print(f"💰 New balance: {self.user.savings_account.balance}")
+                            else:
+                                print("❌ Invalid account type")
+                            self.bank.save_customers()
+                            break
+                        except ValueError as e:
+                            print("❌ Error:", e)
+
+
 
 
 def main():

@@ -241,7 +241,7 @@ class Bank:
             sender_account.withdraw(amount)
             recipient_account.deposit(amount)
             self.save_customers()
-            return f'{amount} has been transferred. Updated balance: {sender_account.balance}'
+            return f'{amount} has been transferred to ID {recipient_id}. Updated balance: {sender_account.balance}'
         else:
             return 'Low funds'
 

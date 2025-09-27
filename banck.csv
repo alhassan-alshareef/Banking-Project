@@ -1,5 +1,5 @@
 customer_id,Fname,Lname,password,balance_checking,checking_active,balance_savings,savings_active
-100,Hassan,Ali,awq@2341,1000.0,true,200.0,true
+100,Hassan,Ali,awq@2341,1000.0,true,300.0,true
 101,Alix,jhon,wqawq@23,1000.0,true,,
 102,ahmed,mohammed,awq@203421,,,200.0,true
 103,Sara,Smith,Aa@12345,1000.0,true,,
