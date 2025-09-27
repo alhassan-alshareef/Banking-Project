@@ -74,7 +74,7 @@ class BankAPP:
                             
                             
                 elif action == 'c':
-                    print("\n👋 Goodbye!")
+                    print("👋 Goodbye!")
                     break
                 
                 
@@ -129,6 +129,22 @@ class BankAPP:
                             print("❌ Error:", e)
 
 
+
+
+                elif action == '3':
+                    recipient_id = input("🆔 Recipient account ID: ")
+                    from_acc = input("Transfer from (checking/savings): ").lower()
+                    to_acc = input("Transfer to (checking/savings): ").lower()
+                    amount = float(input("🔄 Amount: "))
+                    result = self.bank.transfer(self.user.customer_id, recipient_id, amount, from_acc, to_acc)
+                    print(result)
+
+
+                elif action == '4':
+                    print("🚪 Logging out...")
+                    self.user = None
+                else:
+                    print("❌ Invalid option")
 
 
 def main():
