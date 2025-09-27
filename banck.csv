@@ -7,6 +7,9 @@ customer_id,Fname,Lname,password,balance_checking,checking_active,balance_saving
 105,jana,QQ,JA@gfr2005,,,2000.0,true
 106,basil,ahmed,pass@4321,-100.0,false,300.0,true
 107,max,mac,pass@1234,100.0,true,-45.0,true
-108,abc,ssa,pass@123word,550.0,true,,
-109,leo,ass,pass@1234,-135.0,true,100.0,true
-110,Alix,XX,AAx552@322,,,600,true
+108,John,Sam,pass@567,2500.0,true,1000.0,true
+109,jasmine,tookes,jaz111&min,1500.0,true,4000.0,true
+110,selena,mitski,sel&2322ski,1600.0,true,3500.0,true
+111,abc,ssa,pass@123word,550.0,true,,
+112,leo,ass,pass@1234,-135.0,true,100.0,true
+113,Alix,XX,AAx552@322,,,600,true

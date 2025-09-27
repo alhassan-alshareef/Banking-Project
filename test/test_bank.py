@@ -109,5 +109,33 @@ class TestBank(unittest.TestCase):
             
 
 
+    def test_transfer_saving_to_checking(self):
+        customer = self.bank.add_new_customer('John','Sam','pass@567',2000,1500)
+        self.bank.transfer(
+            sender_id=customer.customer_id,
+            recipient_id=customer.customer_id,
+            amount=500,
+            from_account_type='savings',
+            to_account_type='checking'
+        )
+        
+        self.assertEqual(customer.checking_account.balance,2500) 
+        self.assertEqual(customer.savings_account.balance, 1000) 
+        self.bank.save_customers()
+        
+    def test_transfer_to_another_customer(self):
+        customer1 = self.bank.add_new_customer('jasmine','tookes','jaz111&min',2000,4000)
+        customer2 = self.bank.add_new_customer('selena','mitski','sel&2322ski',1600,3000)
+        self.bank.transfer(
+            sender_id=customer1.customer_id,
+            recipient_id=customer2.customer_id,
+            amount=500,
+            from_account_type='checking',
+            to_account_type='savings'
+    )
+        self.assertEqual(customer1.checking_account.balance,1500) 
+        self.assertEqual(customer2.savings_account.balance, 3500) 
+        self.bank.save_customers()
+
 if __name__ == "__main__":
     unittest.main()

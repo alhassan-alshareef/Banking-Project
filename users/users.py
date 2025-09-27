@@ -218,24 +218,33 @@ class Bank:
         except ValueError: 
             return None
 
-    def transfer(self, sender_id, recipient_id, amount, account_type):
+    def transfer(self, sender_id, recipient_id, amount, from_account_type, to_account_type):
         sender = self.get_customers(sender_id)
         recipient = self.get_customers(recipient_id)
 
-        if account_type == 'checking' and sender.has_checking() and recipient.has_checking():
-            if sender.checking_account.balance >= amount:
-                sender.checking_account.withdraw(amount)
-                recipient.checking_account.deposit(amount)
-                self.save_customers()
-                return f'{amount} has been transferred. Updated balance: {sender.checking_account.balance}'
-        elif account_type == 'savings' and sender.has_savings() and recipient.has_savings():
-            if sender.savings_account.balance >= amount:
-                sender.savings_account.withdraw(amount)
-                recipient.savings_account.deposit(amount)
-                self.save_customers()
-                return f'{amount} has been transferred. Updated balance: {sender.savings_account.balance}'
+        if from_account_type == 'checking' and sender.has_checking():
+            sender_account = sender.checking_account
+        elif from_account_type == 'savings' and sender.has_savings():
+            sender_account = sender.savings_account
+        else:
+            return 'Sender account type not available.'
+
+
+        if to_account_type == 'checking' and recipient.has_checking():
+            recipient_account = recipient.checking_account
+        elif to_account_type == 'savings' and recipient.has_savings():
+            recipient_account = recipient.savings_account
+        else:
+            return 'Recipient account type not available.'
+
+        if sender_account.balance >= amount:
+            sender_account.withdraw(amount)
+            recipient_account.deposit(amount)
+            self.save_customers()
+            return f'{amount} has been transferred. Updated balance: {sender_account.balance}'
         else:
             return 'Low funds'
+
         
         
 
