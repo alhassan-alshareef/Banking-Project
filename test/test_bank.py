@@ -122,7 +122,7 @@ class TestBank(unittest.TestCase):
         self.assertEqual(customer.checking_account.balance,2500) 
         self.assertEqual(customer.savings_account.balance, 1000) 
         self.bank.save_customers()
-        
+
     def test_transfer_to_another_customer(self):
         customer1 = self.bank.add_new_customer('jasmine','tookes','jaz111&min',2000,4000)
         customer2 = self.bank.add_new_customer('selena','mitski','sel&2322ski',1600,3000)
@@ -136,6 +136,7 @@ class TestBank(unittest.TestCase):
         self.assertEqual(customer1.checking_account.balance,1500) 
         self.assertEqual(customer2.savings_account.balance, 3500) 
         self.bank.save_customers()
+
 
 if __name__ == "__main__":
     unittest.main()

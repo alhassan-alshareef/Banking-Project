@@ -111,9 +111,6 @@ class Customer:
 
 
 
-
-
-
 class Bank:
     
     def __init__(self, filename= "banck.csv"):
