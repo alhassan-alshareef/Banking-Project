@@ -224,7 +224,6 @@ class Bank:
         else:
             return 'Sender account type not available.'
 
-
         if to_account_type == 'checking' and recipient.has_checking():
             recipient_account = recipient.checking_account
         elif to_account_type == 'savings' and recipient.has_savings():

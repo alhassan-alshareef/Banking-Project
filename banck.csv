@@ -13,3 +13,6 @@ customer_id,Fname,Lname,password,balance_checking,checking_active,balance_saving
 111,abc,ssa,pass@123word,550.0,true,,
 112,leo,ass,pass@1234,-135.0,true,100.0,true
 113,Alix,XX,AAx552@322,,,600,true
+
+
+
