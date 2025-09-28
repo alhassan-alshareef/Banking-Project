@@ -84,6 +84,16 @@ def deposit(self, amount):
     return self.balance
 
 ```
+---
+
+# 📚 What I Learned
+
+- Using **Python classes** to organize code and represent real-world banking entities.  
+- Reading from and writing to **CSV files** to store and manage customer data.  
+- Writing and running **unit tests (unittest)** to make sure the code works as expected.  
+- Handling different banking scenarios like **withdrawals, deposits, overdrafts, and account reactivation**.  
+- Structuring the project in a way that makes it **clear, reusable, and easy to maintain**.
+
 
 
 
