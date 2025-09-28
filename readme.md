@@ -33,7 +33,8 @@ The project is written in **Python** and focuses on security and user-friendly f
  🆔 Unique Account ID
 - Generates a unique ID for each account to prevent duplication.
 
---
+##
+
 # 💻 Code I’m Proud Of
 
 ## 🆔 Unique Account ID Generation
@@ -47,4 +48,35 @@ def new_account_id(self):
     else:
         customer_id = 100
     return str(customer_id)
+
+
+```python
+def withdraw(self, amount):
+    if not self.active:
+        raise ValueError('Account is deactivated')
+    if amount <= 0:
+        raise ValueError('Withdrawal amount must be greater than 0')
+    new_balance = self.balance - amount
+    if new_balance < -100:
+        raise ValueError("Account cannot have a resulting balance of less than -$100.")
+    self.balance = new_balance
+    if self.balance < 0:
+        self.balance -= 35
+        self.overdraftCount += 1
+        print('Overdraft occurred — $35 fee added to your balance.')
+        if self.overdraftCount >= 2:
+            self.active = False
+            print('Account has been deactivated')
+    return self.balance
+
+def deposit(self, amount):
+    if amount <= 0:
+        raise ValueError('The amount must be greater than 0')
+    self.balance += amount
+    if not self.active and self.balance >= 0:
+        self.active = True
+        self.overdraftCount = 0
+        print('Account reactivated. Overdraft cleared and balance restored.')
+    return self.balance
+
 
