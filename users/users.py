@@ -15,15 +15,12 @@ class Account:
             raise ValueError('Account is deactivated')
         if amount <= 0:
             raise ValueError('Withdrawal amount must be greater than 0')
-        if self.balance < 0:
-            if amount > 100:
-                raise ValueError('Cannot withdraw amounts over $100')
-        
+
         new_balance = self.balance - amount
         if  new_balance< -100:
             raise ValueError("account cannot have a resulting balance of less than -$100.")
 
-        self.balance -= amount
+        self.balance = new_balance 
         if self.balance < 0:
             self.balance -=35
             self.overdraftCount += 1
@@ -170,6 +167,7 @@ class Bank:
         except Exception:
             print("Error save customers:")
     
+    #11
     def new_account_id(self):
         if self.customers:  
             customer_id = max(map(int,self.customers.keys())) + 1 
