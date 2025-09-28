@@ -33,3 +33,18 @@ The project is written in **Python** and focuses on security and user-friendly f
  🆔 Unique Account ID
 - Generates a unique ID for each account to prevent duplication.
 
+--
+# 💻 Code I’m Proud Of
+
+## 🆔 Unique Account ID Generation
+
+```python
+def new_account_id(self):
+    if self.customers:  
+        customer_id = max(map(int, self.customers.keys())) + 1
+        while customer_id in self.customers:
+            customer_id += 1
+    else:
+        customer_id = 100
+    return str(customer_id)
+
