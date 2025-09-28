@@ -94,6 +94,13 @@ def deposit(self, amount):
 - Handling different banking scenarios like **withdrawals, deposits, overdrafts, and account reactivation**.  
 - Structuring the project in a way that makes it **clear, reusable, and easy to maintain**.
 
+---
+# 🛠️ Tools Used
+
+- Python  
+- CSV  
+- unittest  
+- Git & GitHub
 
 
 
