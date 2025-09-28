@@ -38,7 +38,7 @@ The project is written in **Python** and focuses on security and user-friendly f
 # 💻 Code I’m Proud Of
 
 ## 🆔 Unique Account ID Generation
----
+
 ##💸 Withdraw & Deposit with Overdraft Handling
 
 ```python
@@ -51,6 +51,8 @@ def new_account_id(self):
         customer_id = 100
     return str(customer_id)
 ```
+---
+##💸 Withdraw & Deposit with Overdraft Handling
 
 
 ```python
@@ -83,6 +85,7 @@ def deposit(self, amount):
     return self.balance
 
 ```
+
 
 
 
