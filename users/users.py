@@ -15,7 +15,6 @@ class Account:
             raise ValueError('Account is deactivated')
         if amount <= 0:
             raise ValueError('Withdrawal amount must be greater than 0')
-
         new_balance = self.balance - amount
         if  new_balance< -100:
             raise ValueError("account cannot have a resulting balance of less than -$100.")
